@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>bin2js</name>
+    </assembly>
+    <members>
+        <member name="T:bin2js.StringExtension">
+            <summary>
+            Some StringExtansion.
+            </summary>
+        </member>
+        <member name="F:bin2js.StringExtension.extansions">
+            <summary>
+            A string array which holds a lot of extansions, which we will use to compare against paths / filenames to determine the extansion of the actual work file.
+            </summary>
+        </member>
+        <member name="M:bin2js.StringExtension.Contains(System.String,System.String,System.StringComparison)">
+            <summary>
+            Checks if a string do contain a specific string including StringCoparison option.
+            </summary>
+            <param name="source">The source string to check.</param>
+            <param name="toCheck">The string that shall be looked for.</param>
+            <param name="comparison">String Comparison options.</param>
+            <returns>True if the string to look for was found., else false.</returns>
+        </member>
+        <member name="M:bin2js.StringExtension.WriteLine(System.String,System.String,System.Object[])">
+            <summary>
+            Write a string to a file.
+            </summary>
+            <param name="destination">The file to write into.</param>
+            <param name="message">The message to write.</param>
+            <param name="args">The arguments that shall be swapped with the place holders.</param>
+        </member>
+        <member name="M:bin2js.StringExtension.GetName(System.String)">
+            <summary>
+            Trims the path out of a name. Name can be last folder in string or file.
+            </summary>
+            <param name="source">The path string to trim.</param>
+            <returns>The name without any back slashes or path in it.</returns>
+        </member>
+        <member name="M:bin2js.StringExtension.GetPath(System.String)">
+            <summary>
+            Trim the name out of a path. Name can be last folder in string or file.
+            </summary>
+            <param name="source">The path string to trim.</param>
+            <returns>The path without the last folder or the file in the string.</returns>
+        </member>
+        <member name="M:bin2js.StringExtension.TestFileName(System.String)">
+            <summary>
+            Tests if a file already exists and change the name if needed, then returns it. (Adds a number to the file on end before the extansion)
+            </summary>
+            <param name="source">The String to Test if the file exists.</param>
+            <returns>The String that we can use to create a new file.</returns>
+        </member>
+        <member name="T:bin2js.ByteExtension">
+            <summary>
+            Some ByteExtansion.
+            </summary>
+        </member>
+        <member name="M:bin2js.ByteExtension.Write(System.Byte[],System.String)">
+            <summary>
+            Write a byte array to file. Includes IO Exception Handling.
+            </summary>
+            <param name="source">The byte[] with data to write.</param>
+            <param name="destination">The file to write into.</param>
+        </member>
+        <member name="F:bin2js.Program.u32">
+            <summary>
+            The string to write into the .js.
+            </summary>
+        </member>
+        <member name="F:bin2js.Program.newCrap">
+            <summary>
+            The string to write into hte .js.
+            </summary>
+        </member>
+        <member name="M:bin2js.Program.EndianSwapp(System.String)">
+            <summary>
+            Reverse a Hexstring BigEndian wise.
+            </summary>
+            <param name="source">The soruce Hex String to use.</param>
+            <returns>The Big Endian Swapped Hex String.</returns>
+        </member>
+        <member name="M:bin2js.Program.CheckArgs(System.String[])">
+            <summary>
+            Check arguments.
+            </summary>
+            <param name="args">The arguments to check.</param>
+        </member>
+        <member name="M:bin2js.Program.ShowUsage">
+            <summary>
+            Show Usage.
+            </summary>
+        </member>
+        <member name="M:bin2js.Program.ReadIntoBuffer(System.String,System.Int32)">
+            <summary>
+            Read file into buffer.
+            </summary>
+        </member>
+        <member name="M:bin2js.Program.Main(System.String[])">
+            <summary>
+            The main entry.
+            </summary>
+            <param name="args">The arguments.</param>
+        </member>
+    </members>
+</doc>

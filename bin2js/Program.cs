@@ -123,11 +123,33 @@ namespace bin2js {
         private const string u32 = "  u32[{0}] = 0x{1};";
 
         /// <summary>
+        /// The string to write into hte .js.
+        /// </summary>
+        private const string newCrap = "    p.write4(addr.add32(0x{0}), 0x{1});";
+
+        private static bool flag = false;
+
+        /// <summary>
+        /// Reverse a Hexstring BigEndian wise.
+        /// </summary>
+        /// <param name="source">The soruce Hex String to use.</param>
+        /// <returns>The Big Endian Swapped Hex String.</returns>
+        private static string EndianSwapp(string source) {
+            string reversed = string.Empty;
+            for (int i = source.Length; i > 0; i -= 2) {
+                if (i < 2) reversed += source.Substring(i - i, 1);
+                else reversed += source.Substring(i - 2, 2);
+            }
+            return reversed;
+        }
+
+        /// <summary>
         /// Check arguments.
         /// </summary>
         /// <param name="args">The arguments to check.</param>
         private static void CheckArgs(string[] args) {
-            if (args.Length == 0 || args.Length > 1) ShowUsage();
+            if (args.Length == 0 || args.Length > 2) ShowUsage();
+            if (args.Length == 2) flag= true;
             if (!args[0].Contains(".bin", StringComparison.InvariantCultureIgnoreCase)) {
                 Console.WriteLine("Please feed me with a binary !");
                 Console.WriteLine("\nPress any key to continue...");
@@ -167,32 +189,37 @@ namespace bin2js {
             Console.WriteLine(" bin2js (c) by cfwprpht 2017\n");
             CheckArgs(args);
 
-            FileInfo fi = new FileInfo(args[0]);                                                                                  // Get file informations.
-            if (File.Exists(fi.FullName)) {                                                                                       // If file exists.
-                ASCIIEncoding encode = new ASCIIEncoding();                                                                       // Encoder instance.
+            FileInfo fi = new FileInfo(args[0]);                                                                                      // Get file informations.
+            if (File.Exists(fi.FullName)) {                                                                                           // If file exists.
+                ASCIIEncoding encode = new ASCIIEncoding();                                                                           // Encoder instance.
                 try {
-                    byte[] file = ReadIntoBuffer(args[0], (int)fi.Length);                                                        // Read file into buffer.
-                    string newFile = (args[0].GetPath() + args[0].GetName().Replace(".bin", ".js")).TestFileName();               // Get the new file name.
-                    File.Create(newFile).Close();                                                                                 // Create output file and check name availability.
-                    newFile.WriteLine("// https:" + "//github.com/cfwprpht/bin2js\n");                                            // Write some repo info into the file.
+                    byte[] file = ReadIntoBuffer(args[0], (int)fi.Length);                                                            // Read file into buffer.
+                    string newFile = (args[0].GetPath() + args[0].GetName().Replace(".bin", ".js")).TestFileName();                   // Get the new file name.
+                    File.Create(newFile).Close();                                                                                     // Create output file and check name availability.
+                    newFile.WriteLine("// https:" + "//github.com/cfwprpht/bin2js\n");                                                // Write some repo info into the file.
                     byte[] trick = encode.GetBytes("function write" + newFile.GetName().Replace(".js", "") + "(write) {\n  setBase(write);\n"); // Encode the function string to bytes.
-                    trick.Write(newFile);                                                                                         // Write the Function and name it like the input bin.
+                    byte[] trick2 = encode.GetBytes("function payload(p, addr) {\n");                                                 // Encode the function string to bytes.
+                    if (!flag) trick.Write(newFile);                                                                                  // Write the Function and name it like the input bin.
+                    else trick2.Write(newFile);
 
-                    using (BinaryReader br = new BinaryReader(new MemoryStream(file))) {                                          // Initialize a binary reader and point him to the file buffer.
-                        byte[] toStringify = new byte[4];                                                                         // Initialize a byte array to read the converting bytes into.
-                        int index, readed;                                                                                        // Initialize some integer counters.
-                        index = readed = 0;                                                                                       // Set them to 0.
-                        while (readed != file.Length) {                                                                           // Loop over all bytes now and convert.
-                            toStringify = br.ReadBytes(toStringify.Length);                                                       // Read 4 bytes.
-                            newFile.WriteLine(u32, index.ToString(), BitConverter.ToString(toStringify).Replace("-", ""));        // Stringify the bytes, format and write it into the file.
-                            index++;                                                                                              // Count indexer up.
-                            readed += toStringify.Length;                                                                         // Count readed bytes up.
+                    using (BinaryReader br = new BinaryReader(new MemoryStream(file))) {                                              // Initialize a binary reader and point him to the file buffer.
+                        byte[] toStringify = new byte[4];                                                                             // Initialize a byte array to read the converting bytes into.
+                        int index, readed;                                                                                            // Initialize some integer counters.
+                        index = readed = 0;                                                                                           // Set them to 0.
+                        while (readed != file.Length) {                                                                               // Loop over all bytes now and convert.
+                            toStringify = br.ReadBytes(toStringify.Length);                                                           // Read 4 bytes.
+
+                            if (!flag) newFile.WriteLine(u32, index.ToString(), BitConverter.ToString(toStringify).Replace("-", "")); // Stringify the bytes, format and write it into the file.
+                            else newFile.WriteLine(newCrap, EndianSwapp(BitConverter.ToString(BitConverter.GetBytes(index * 4)).Replace("-", "")), BitConverter.ToString(toStringify).Replace("-", ""));   // Stringify the bytes, format and write it into the file.
+
+                            index++;                                                                                                  // Count indexer up.
+                            readed += toStringify.Length;                                                                             // Count readed bytes up.
                         }
-                    }
-                    trick = encode.GetBytes("}\n");                                                                               // Encode the function closing clamb.
-                    trick.Write(newFile);                                                                                         // Write the closing clamb for the function.
+                    } // Write the closing clamb for the function.
+                    trick = encode.GetBytes("}\n");                                                                                   // Encode the function closing clamb.
+                    trick.Write(newFile);
                 } catch (Exception e) { throw new Exception(e.ToString()); }
-            } else Console.WriteLine("Can not access the file !");                                                                // Error.
+            } else Console.WriteLine("Can not access the file !");                                                                    // Error.
             Console.WriteLine("Done!\nThx for using my Tool ! :)\nPress any key to continue...");
             Console.ReadLine();
             Environment.Exit(0);
