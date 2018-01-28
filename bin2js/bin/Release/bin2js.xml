@@ -23,7 +23,30 @@
             <param name="comparison">String Comparison options.</param>
             <returns>True if the string to look for was found., else false.</returns>
         </member>
+        <member name="M:bin2js.StringExtension.Contain(System.String,System.String)">
+            <summary>
+            Checks if a string do contain a specific string including StringCoparison option. (Auto ignoreCase)
+            </summary>
+            <param name="source">The source string to check.</param>
+            <param name="toCheck">The string that shall be looked for.</param>
+            <returns>True if the string to look for was found., else false.</returns>
+        </member>
         <member name="M:bin2js.StringExtension.WriteLine(System.String,System.String,System.Object[])">
+            <summary>
+            Write a string to a file.
+            </summary>
+            <param name="destination">The file to write into.</param>
+            <param name="message">The message to write.</param>
+            <param name="args">The arguments that shall be swapped with the place holders.</param>
+        </member>
+        <member name="M:bin2js.StringExtension.WriteAllLines(System.String,System.String[])">
+            <summary>
+            Write a string to a file.
+            </summary>
+            <param name="destination">The file to write into.</param>
+            <param name="message">The message to write.</param>
+        </member>
+        <member name="M:bin2js.StringExtension.Write(System.String,System.String,System.Object[])">
             <summary>
             Write a string to a file.
             </summary>
@@ -51,6 +74,15 @@
             </summary>
             <param name="source">The String to Test if the file exists.</param>
             <returns>The String that we can use to create a new file.</returns>
+        </member>
+        <member name="M:bin2js.StringExtension.XReplace(System.String,System.String,System.String)">
+            <summary>
+            XReg Replace some pattern from a source string with a given string.
+            </summary>
+            <param name="source">The source string to use.</param>
+            <param name="searchPattern">The pattern to search for.</param>
+            <param name="replaceWith">The string to replace with.</param>
+            <returns>The Replaced string, if any found.</returns>
         </member>
         <member name="T:bin2js.ByteExtension">
             <summary>
@@ -80,6 +112,12 @@
             </summary>
             <param name="source">The soruce Hex String to use.</param>
             <returns>The Big Endian Swapped Hex String.</returns>
+        </member>
+        <member name="M:bin2js.Program.HexStringToByte(System.String)">
+            <summary>
+            Convert a HexString to a byte Array.
+            </summary>
+            <returns>The byted HexString.</returns>
         </member>
         <member name="M:bin2js.Program.CheckArgs(System.String[])">
             <summary>
