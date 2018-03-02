@@ -276,14 +276,16 @@ namespace bin2js {
                             if (line.Contain("  u32[")) newBin.Add(line.Replace("[", "").Replace("]", "").XReplace(@"  u32(\d+) = 0x", "").Replace(";", ""));
                             else if (line.Contain("    p.write4(addr.add32(0x")) newBin.Add(line.Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace(".", "").XReplace("    pwrite4addradd320x([a-zA-Z0-9]{8}), 0x", "").Replace(";", ""));
                             else if (line.Contain("payload = [")) {
-                                string[] splitted = line.Replace("payload = [", "").Replace("]", "").Split(new char[] { ',' });
+                                string[] splitted = line.Replace("var payload = [", "").Replace("];", "").Split(new char[] { ',' });
                                 string correct = string.Empty;
+                                string toCorrect = string.Empty;
                                 foreach (string _line in splitted) {
                                     correct = string.Empty;
-                                    if (_line.Length < 8) {                                        
-                                        for (int i = _line.Length; i < 8; i++) correct += "0";
-                                        correct += _line;
-                                    } else correct = _line;
+                                    toCorrect = _line.Replace("0x", "");
+                                    if (toCorrect.Length < 8) {                                        
+                                        for (int i = toCorrect.Length; i < 8; i++) correct += "0";
+                                        correct += toCorrect;
+                                    } else correct = toCorrect;
                                     newBin.Add(correct);
                                 } break;
                             }
@@ -292,6 +294,7 @@ namespace bin2js {
                         using (BinaryWriter binWriter = new BinaryWriter(new FileStream(newFile, FileMode.Create, FileAccess.Write))) {
                             foreach (string toConvert in newBin.ToArray()) {
                                 byte[] converted = new byte[4];
+                                Console.WriteLine("Converting: " + toConvert);
                                 converted = HexStringToByte(toConvert);
                                 binWriter.Write(converted);
                             }

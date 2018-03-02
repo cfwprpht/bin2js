@@ -1,0 +1,6 @@
+C:\Coding\bin2js\bin2js\bin\Debug\bin2js.exe.config
+C:\Coding\bin2js\bin2js\bin\Debug\bin2js.exe
+C:\Coding\bin2js\bin2js\bin\Debug\bin2js.pdb
+C:\Coding\bin2js\bin2js\obj\Debug\bin2js.csprojResolveAssemblyReference.cache
+C:\Coding\bin2js\bin2js\obj\Debug\bin2js.exe
+C:\Coding\bin2js\bin2js\obj\Debug\bin2js.pdb

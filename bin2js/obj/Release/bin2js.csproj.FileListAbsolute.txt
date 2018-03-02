@@ -1,0 +1,7 @@
+C:\Coding\bin2js\bin2js\bin\Release\bin2js.exe.config
+C:\Coding\bin2js\bin2js\bin\Release\bin2js.xml
+C:\Coding\bin2js\bin2js\bin\Release\bin2js.exe
+C:\Coding\bin2js\bin2js\bin\Release\bin2js.pdb
+C:\Coding\bin2js\bin2js\obj\Release\bin2js.csproj.CoreCompileInputs.cache
+C:\Coding\bin2js\bin2js\obj\Release\bin2js.exe
+C:\Coding\bin2js\bin2js\obj\Release\bin2js.pdb
