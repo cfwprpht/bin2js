@@ -147,6 +147,20 @@ namespace bin2js {
         /// <param name="replaceWith">The string to replace with.</param>
         /// <returns>The Replaced string, if any found.</returns>
         public static string XReplace(this string source, string searchPattern, string replaceWith) { return Regex.Replace(source, searchPattern, replaceWith); }
+
+        /// <summary>
+        /// Reverse a Hexstring BigEndian wise.
+        /// </summary>
+        /// <param name="source">The soruce Hex String to use.</param>
+        /// <returns>The Big Endian Swapped Hex String.</returns>
+        public static string EndianSwapp(this string source) {
+            string reversed = string.Empty;
+            for (int i = source.Length; i > 0; i -= 2) {
+                if (i < 2) reversed += source.Substring(i - i, 1);
+                else reversed += source.Substring(i - 2, 2);
+            }
+            return reversed;
+        }
     }
 
     /// <summary>
@@ -295,7 +309,7 @@ namespace bin2js {
                             foreach (string toConvert in newBin.ToArray()) {
                                 byte[] converted = new byte[4];
                                 Console.WriteLine("Converting: " + toConvert);
-                                converted = HexStringToByte(toConvert);
+                                converted = HexStringToByte(toConvert.EndianSwapp());
                                 binWriter.Write(converted);
                             }
                             binWriter.Close();

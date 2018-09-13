@@ -2,6 +2,8 @@
  Binary 2 JavaScript
 ==============================
 
+* Fixed EndianSwap for option -4. Credits to Z80 0x90h.
+
 * Fixed a bug on the bin convertion routine.
 
 A simple tool to convert a binary file which will be mostly a payload, to a 
