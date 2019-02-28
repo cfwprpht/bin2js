@@ -276,7 +276,7 @@ namespace bin2js {
         /// </summary>
         /// <param name="args">The arguments.</param>
         static void Main(string[] args) {
-            Console.WriteLine(" bin2js (c) by cfwprpht 2017\n");
+            Console.WriteLine(" bin2js (c) by cfwprpht 2017\n v1.6\n");
             CheckArgs(args);
 
             FileInfo fi = new FileInfo(args[0]);                                                                                      // Get file informations.
@@ -321,7 +321,7 @@ namespace bin2js {
                         newFile.WriteLine("// https:" + "//github.com/cfwprpht/bin2js\n");                                                // Write some repo info into the file.
                         byte[] trick = encode.GetBytes("function write" + newFile.GetName().Replace(".js", "") + "(write) {\n  setBase(write);\n"); // Encode the function string to bytes.
                         byte[] trick2 = encode.GetBytes("function payload(p, addr) {\n");                                                 // Encode the function string to bytes.
-                        byte[] trick3 = encode.GetBytes("payload = [");
+                        byte[] trick3 = encode.GetBytes("var payload = [");
                         if (args[1] == "-2") trick2.Write(newFile);                                                                       // Write the Function and name it like the input bin.
                         else if (args[1] == "-3") trick3.Write(newFile);
                         else if (args[1] == "-1") trick.Write(newFile);
